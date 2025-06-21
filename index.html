@@ -212,22 +212,33 @@
       margin-bottom: 0.2em;
       margin-left: 0;
     }
-    @media (max-width: 700px) {
-      .container {
-        padding: 1rem 0.6rem 1.5rem 0.6rem;
-      }
-      nav {
+	@media (max-width: 700px) {
+	  nav {
         display: none;
       }
-      .hamburger {
-        display: flex;
-      }
-      header h1 { font-size: 2rem; }
-      section h2 { font-size: 1.3rem; }
-      .info-list li::before { font-size: 1em; margin-right: 0.6em;}
-      .ablauf-titel { font-size: 1em; }
-      .ablauf-beschreibung { font-size: 0.99em; }
-    }
+	  .ablauf-titel,
+	  .ablauf-beschreibung,
+	  .info-list,
+	  .info-list li,
+	  .info-title {
+		font-size: 1em !important;
+	  }
+	  .hamburger {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		width: 40px;
+		height: 40px;
+		background: transparent;
+		border: none;
+		cursor: pointer;
+		position: absolute;
+		top: 1em;
+		right: 1em;
+		z-index: 1002;
+	  }
+	}
   </style>
 </head>
 <body>
