@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Trauung Sophia &amp; Simon</title>
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700|Dancing+Script&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #92617f;
+      --secondary: #f3e6e8;
+      --white: #fff;
+      --dark: #2c2c2c;
+      --accent: #c2b7b7;
+    }
+    * { box-sizing: border-box; }
+    body {
+      font-family: 'Montserrat', Arial, sans-serif;
+      background: var(--secondary);
+      margin: 0;
+      color: var(--dark);
+    }
+    header {
+      background: var(--primary);
+      color: var(--white);
+      text-align: center;
+      padding: 2rem 1rem 1.5rem 1rem;
+      position: relative;
+    }
+    header h1 {
+      font-family: 'Dancing Script', cursive;
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+      letter-spacing: 2px;
+    }
+    header p {
+      font-size: 1.2rem;
+      margin: 0;
+      font-weight: 400;
+    }
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin: 1.5rem 0 1rem 0;
+    }
+    nav a {
+      color: var(--white);
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1rem;
+      transition: color 0.2s, background 0.2s;
+      padding: 0.5rem 0.8rem;
+      border-radius: 6px;
+    }
+    nav a:hover,
+    nav a:focus {
+      color: var(--primary);
+      background: var(--white);
+    }
+    .hamburger {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      position: absolute;
+      top: 2rem;
+      right: 1.2rem;
+      z-index: 101;
+      width: 36px;
+      height: 36px;
+      align-items: center;
+      justify-content: center;
+    }
+    .hamburger:focus { outline: 2px solid var(--white); }
+    .hamburger span, .hamburger span:before, .hamburger span:after {
+      display: block;
+      background: var(--white);
+      height: 4px;
+      width: 28px;
+      border-radius: 2px;
+      position: absolute;
+      transition: .2s;
+      content:'';
+    }
+    .hamburger span {
+      position: relative;
+    }
+    .hamburger span:before {
+      position: absolute;
+      content: "";
+      top: -9px;
+      left: 0;
+      width: 28px;
+      height: 4px;
+      background: var(--white);
+      border-radius: 2px;
+    }
+    .hamburger span:after {
+      position: absolute;
+      content: "";
+      top: 9px;
+      left: 0;
+      width: 28px;
+      height: 4px;
+      background: var(--white);
+      border-radius: 2px;
+    }
+    .hamburger.active span { background: transparent;}
+    .hamburger.active span:before { top:0; transform:rotate(45deg);}
+    .hamburger.active span:after { top:0; transform:rotate(-45deg);}
+    .mobile-nav-overlay {
+      display: none;
+      position: fixed;
+      z-index: 100;
+      left: 0; right: 0; top: 0; bottom: 0;
+      background: rgba(146,97,127,0.97);
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+    .mobile-nav-overlay.active {
+      display: flex;
+      animation: fadeIn 0.2s;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0;}
+      to { opacity: 1;}
+    }
+    .mobile-nav-overlay a {
+      color: var(--white);
+      font-size: 1.4rem;
+      margin: 1rem 0;
+      text-decoration: none;
+      font-weight: bold;
+      letter-spacing: 1px;
+      border-radius: 8px;
+      padding: 0.6rem 1.3rem;
+      transition: background 0.2s, color 0.2s;
+    }
+    .mobile-nav-overlay a:hover {
+      background: var(--white);
+      color: var(--primary);
+    }
+    .container {
+      max-width: 800px;
+      margin: 2rem auto;
+      background: var(--white);
+      border-radius: 12px;
+      box-shadow: 0 2px 8px 0 #0001;
+      padding: 2rem 1.5rem 2.5rem 1.5rem;
+    }
+    section {
+      margin-bottom: 2.5rem;
+    }
+    section h2 {
+      font-family: 'Dancing Script', cursive;
+      color: var(--primary);
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+    .info-list {
+      list-style: none;
+      padding: 0;
+      font-size: 1rem;
+      margin: 0;
+    }
+    .info-list li {
+      padding: 0.5em 0 0.1em 0;
+      display: flex;
+      align-items: flex-start;
+    }
+    .info-list li::before {
+      content: "•";
+      color: #111;
+      font-size: 1.25em;
+      font-weight: bold;
+      margin-right: 0.75em;
+      line-height: 1.2;
+    }
+    .info-title {
+      font-weight: bold;
+      color: #111;
+      margin-bottom: 0.10em;
+      font-size: 1em;
+      flex-shrink: 0;
+      display: inline;
+    }
+    /* Weltkarten-Icon */
+	.maps-link {
+	  margin-left: 0.2em;
+	  font-size: 0.9em;  /* vorher: 1.18em */
+	  text-decoration: none;
+	  color: var(--primary);
+	  transition: color 0.2s, text-shadow 0.2s;
+	  vertical-align: middle;
+	}
+    .maps-link:hover {
+      color: #e56399;
+      text-shadow: 0 2px 10px #c2b7b777;
+    }
+    /* Tagesablauf Block */
+    .ablauf-titel {
+      font-size: 1em;
+      font-weight: bold;
+      margin-bottom: 0.18em;
+      color: #111;
+    }
+    .ablauf-beschreibung {
+      font-size: 1em;
+      color: #2c2c2c;
+      margin-bottom: 0.2em;
+      margin-left: 0;
+    }
+    @media (max-width: 700px) {
+      .container {
+        padding: 1rem 0.6rem 1.5rem 0.6rem;
+      }
+      nav {
+        display: none;
+      }
+      .hamburger {
+        display: flex;
+      }
+      header h1 { font-size: 2rem; }
+      section h2 { font-size: 1.3rem; }
+      .info-list li::before { font-size: 1em; margin-right: 0.6em;}
+      .ablauf-titel { font-size: 1em; }
+      .ablauf-beschreibung { font-size: 0.99em; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Trauung Sophia &amp; Simon</h1>
+    <p>Einladung zu unserer Trauung am 09.08.2025 in Ladenburg</p>
+    <button class="hamburger" aria-label="Menü öffnen" aria-controls="mobilenav" aria-expanded="false">
+      <span></span>
+    </button>
+    <nav>
+      <a href="#einleitung">Willkommen</a>
+      <a href="#ablauf">Ablauf</a>
+      <a href="#anfahrt">Anfahrt</a>
+	  <a href="#dresscode">Dresscode</a>
+	  <a href="#geschenke">Geschenke</a>
+      <a href="#rueckmeldung">Rückmeldung</a>
+    </nav>
+    <div class="mobile-nav-overlay" id="mobilenav" role="menu">
+      <a href="#einleitung">Willkommen</a>
+      <a href="#ablauf">Ablauf</a>
+      <a href="#anfahrt">Anfahrt</a>
+	  <a href="#dresscode">Dresscode</a>
+	  <a href="#geschenke">Geschenke</a>
+      <a href="#rueckmeldung">Rückmeldung</a>
+    </div>
+  </header>
+  
+  <div class="container">
+
+    <section id="einleitung">
+      <h2>Willkommen</h2>
+      <p>
+        Wir freuen uns sehr, diesen besonderen Tag mit euch gemeinsam feiern zu dürfen.<br>
+        Am 09. August 2025 werden wir uns in Ladenburg das Ja-Wort geben und laden euch herzlich ein, diesen Meilenstein in unserem Leben mit uns zu teilen. Alle wichtigen Informationen findet ihr unten stehend.
+      </p>
+    </section>
+
+    <section id="ablauf">
+      <h2>Tagesablauf</h2>
+      <ul class="info-list">
+        <li>
+          <div>
+            <div class="ablauf-titel"><strong>Trauung: 10:00 Uhr</strong></div>
+            <div class="ablauf-beschreibung">
+              Standesamt Ladenburg, Hauptstraße 7
+              <a class="maps-link" href="https://www.google.com/maps?q=Rathaus+Ladenburg,+Hauptstraße+7,+68526+Ladenburg" target="_blank" title="In Google Maps öffnen">🗺️</a>
+            </div>
+          </div>
+        </li>
+		<li>
+		  <div>
+			<div class="ablauf-titel"><strong>Brunchen: 11:00 Uhr</strong></div>
+			<div class="ablauf-beschreibung">
+			  Kaffeehaus Ladenburg, Marktplatz 9
+			  <a class="maps-link" href="https://maps.app.goo.gl/jUDrF3STeeoYRP3r7" target="_blank" title="In Google Maps öffnen">🗺️</a>
+			</div>
+		  </div>
+		</li>
+        <li>
+          <div>
+            <div class="ablauf-titel"><strong>Danach (optional)</strong></div>
+            <div class="ablauf-beschreibung">
+              Mit dem Brunchen endet der offizielle Teil. Wer möchte, kann mit uns danach aber gerne noch mit auf die Neckarwiese kommen, um dort zu entspannen und kleine Spiele wie Wikingerschach, Frisbee oder Ähnliches zu spielen.
+              <a class="maps-link" href="https://www.google.com/maps?q=Neckarwiese,+Ladenburg" target="_blank" title="Neckarwiese in Google Maps öffnen">🗺️</a>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </section>
+
+	<section id="anfahrt">
+	  <h2>Treffpunkt & Parken</h2>
+	  <ul class="info-list">
+		<li>
+		  <div>
+			<div class="ablauf-titel"><strong>Treffpunkt:</strong></div>
+			<div class="ablauf-beschreibung">
+			  Wir treffen uns um <strong>9:30 Uhr</strong> vor dem Standesamt Ladenburg (Eingang ist in der Mühlgasse).
+			</div>
+		  </div>
+		</li>
+		<li>
+		  <div>
+			<div class="ablauf-titel"><strong>Parken:</strong></div>
+			<div class="ablauf-beschreibung">
+			  In Ladenburg gibt es einige freie Parkmöglichkeiten.<br>
+			  Wir würden folgende empfehlen, da sie relativ nah am Standesamt und der Neckarwiese sind:
+			  <ul style="margin: 0.1em 0 0.1em 1.1em; padding:0; list-style-type: disc;">
+				<li>
+				  <strong>Neckarstraße:</strong>&nbsp;&nbsp;Gegenüber der öffentlichen Toiletten
+				  <a class="maps-link" href="https://maps.app.goo.gl/Ny3kb4a8m83i9D1a6" target="_blank" title="In Google Maps öffnen">🗺️</a>
+				</li>
+				<li>
+				  <strong>Ankerplatz:</strong>&nbsp;&nbsp;Parkplatz Ankerplatz
+				  <a class="maps-link" href="https://maps.app.goo.gl/TuDW524M8ddeHKHGA" target="_blank" title="In Google Maps öffnen">🗺️</a>
+				</li>
+				<li>
+				  <strong>Bei uns:</strong>&nbsp;&nbsp;Ca.&nbsp;15&nbsp;Minuten Fußweg zum Standesamt.
+				</li>
+			  </ul>
+			</div>
+		  </div>
+		</li>
+	  </ul>
+	</section>
+
+    <section id="dresscode">
+      <h2>Dresscode</h2>
+      <p>
+        Es gibt <strong>keinen Dresscode</strong> – ihr könnt wirklich so kommen, wie ihr möchtet.<br>
+        Tragt, worin ihr euch wohlfühlt – Hauptsache, ihr bringt gute Laune mit!
+      </p>
+    </section>
+
+	<section id="geschenke">
+	  <h2>Geschenke</h2>
+	  <p>
+		Da wir vorhaben, irgendwann noch einmal „richtig“ zu feiern, erwarten wir keine Geschenke.<br>
+		Wer uns aber eine Freude machen möchte, kann uns sehr gerne ein paar seiner Lieblingsrezepte mitbringen (aufgeschrieben – nicht gekocht!).
+	  </p>
+	</section>
+
+    <section id="rueckmeldung">
+      <h2>Rückmeldung</h2>
+      <p>
+        Bitte gebt uns <strong>bis zum 27.07.2025</strong> Bescheid, ob ihr kommen könnt.<br>
+        Ihr könnt euch gerne direkt bei uns melden – persönlich, telefonisch oder per Nachricht.
+      </p>
+    </section>
+
+  </div>
+  <footer>
+    &hearts; Sophia &amp; Simon &mdash; Wir freuen uns auf euch!
+  </footer>
+
+  <script>
+    // Soft-Scroll für Navigation (beide Menüs)
+    function isMobileMode() {
+      return window.innerWidth < 701;
+    }
+    function closeMobileNav() {
+      mobileNav.classList.remove('active');
+      hamburger.classList.remove('active');
+      hamburger.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+    }
+    document.querySelectorAll('nav a').forEach(link => {
+      link.addEventListener('click', function(e) {
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({behavior: 'smooth'});
+        }
+      });
+    });
+    // Mobile Navigation
+    const hamburger = document.querySelector('.hamburger');
+    const mobileNav = document.getElementById('mobilenav');
+    const mobileNavLinks = mobileNav.querySelectorAll('a');
+    hamburger.addEventListener('click', function() {
+      mobileNav.classList.toggle('active');
+      this.classList.toggle('active');
+      this.setAttribute('aria-expanded', mobileNav.classList.contains('active') ? 'true' : 'false');
+      document.body.style.overflow = mobileNav.classList.contains('active') ? 'hidden' : '';
+    });
+    // Links in mobilem Menü: Beim Anklicken Menü schließen & scrollen
+    mobileNavLinks.forEach(link => {
+      link.addEventListener('click', function(e) {
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          e.preventDefault();
+          closeMobileNav();
+          setTimeout(() => {
+            target.scrollIntoView({behavior: 'smooth'});
+          }, 200);
+        }
+      });
+    });
+    window.addEventListener('resize', () => {
+      if (!isMobileMode()) closeMobileNav();
+    });
+    window.addEventListener('keydown', (e)=>{
+      if(e.key==="Escape") closeMobileNav();
+    });
+  </script>
+</body>
+</html>
